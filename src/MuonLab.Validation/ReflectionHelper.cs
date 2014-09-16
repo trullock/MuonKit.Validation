@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace MuonLab.Validation
 {
-	static class ReflectionHelper
+	public static class ReflectionHelper
     {
         public static string GetPropertyName<T, TResult>(Expression<Func<T, TResult>> property)
         {

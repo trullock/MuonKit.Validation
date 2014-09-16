@@ -7,7 +7,7 @@ namespace MuonLab.Validation.Tests
 	public sealed class when_nesting_validation_arrays
 	{
 		[Test]
-		public void CorrectPropertyChainGenerated()
+		public void CorrectPropertyChainGeneratedFromChildList()
 		{
 			var outerClass = new OuterClass
 			{
@@ -23,7 +23,7 @@ namespace MuonLab.Validation.Tests
 				}}
 			};
 
-			var validator = new OuterClassValidator();
+			var validator = new OuterClassChildListValidator();
 
 			var validationReport = validator.Validate(outerClass);
 
@@ -36,35 +36,92 @@ namespace MuonLab.Validation.Tests
 			error1.ShouldEqual("InnerClasses[0].InnerInnerClasses[0].InnerInnerInnerClasses[0].Property");
 		}
 
-		public class OuterClassValidator : Validator<OuterClass>
+		[Test]
+		public void CorrectPropertyChainGeneratedFromCollection()
+		{
+			var outerClass = new OuterClass
+			{
+				InnerClasses = new[] {new InnerClass
+				{
+					InnerInnerClasses = new[] {new InnerInnerClass
+					{
+						InnerInnerInnerClasses = new [] {new InnerInnerInnerClass
+						{
+							Property = "Hello"
+						},new InnerInnerInnerClass
+						{
+							Property = "Hello"
+						},new InnerInnerInnerClass()}
+					}}
+				}}
+			};
+
+			var validator = new OuterClassCollectionValidator();
+
+			var validationReport = validator.Validate(outerClass);
+
+			validationReport.IsValid.ShouldBeFalse();
+
+			var violations = validationReport.Violations.ToArray();
+
+			var error1 = ReflectionHelper.PropertyChainToString(violations[0].Property, '.');
+
+			error1.ShouldEqual("InnerClasses[0].InnerInnerClasses[0].InnerInnerInnerClasses[0].Property");
+		}
+
+		public class OuterClassChildListValidator : Validator<OuterClass>
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.InnerClasses.AllSatisfy(new InnerClassValidator()));
+				Ensure(x => x.InnerClasses.AllSatisfy(new InnerClassChildListValidator()));
 			}
 		}
 
-		public class InnerClassValidator : Validator<InnerClass>
+		public class InnerClassChildListValidator : Validator<InnerClass>
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.InnerInnerClasses.AllSatisfy(new InnerInnerClassValidator()));
+				Ensure(x => x.InnerInnerClasses.AllSatisfy(new InnerInnerClassChildListValidator()));
 			}
 		}
 
-		public class InnerInnerClassValidator : Validator<InnerInnerClass>
+		public class InnerInnerClassChildListValidator : Validator<InnerInnerClass>
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.InnerInnerInnerClasses.AllSatisfy(new InnerInnerInnerClassValidator()));
+				Ensure(x => x.InnerInnerInnerClasses.AllSatisfy(new InnerInnerInnerClassChildListValidator()));
 			}
 		}
 
-		public class InnerInnerInnerClassValidator : Validator<InnerInnerInnerClass>
+		public class InnerInnerInnerClassChildListValidator : Validator<InnerInnerInnerClass>
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.Property.IsNotEqualTo("Hello"));
+				When(x => x.IsNotNull(), () => Ensure(x => x.Property.IsNullOrIsEmpty()));
+			}
+		}
+
+		public class OuterClassCollectionValidator : Validator<OuterClass>
+		{
+			protected override void Rules()
+			{
+				Ensure(x => x.InnerClasses.AllSatisfy(new InnerClassCollectionValidator()));
+			}
+		}
+
+		public class InnerClassCollectionValidator : Validator<InnerClass>
+		{
+			protected override void Rules()
+			{
+				Ensure(x => x.InnerInnerClasses.AllSatisfy(new InnerInnerClassCollectionValidator()));
+			}
+		}
+
+		public class InnerInnerClassCollectionValidator : Validator<InnerInnerClass>
+		{
+			protected override void Rules()
+			{
+				Ensure(x => x.InnerInnerInnerClasses.DoesNotHaveDuplicates(y => y.Property));
 			}
 		}
 
