@@ -21,7 +21,7 @@ namespace MuonLab.Validation
 			this.ErrorMessage = errorMessage;
 		}
 
-		IList<int> GetInvalidIndexes()
+		IEnumerable<int> GetInvalidIndexes()
 		{
 			var comparePropertyFunc = this.compareProperty.Compile();
 			var invalidIndexes = new List<int>();
@@ -38,15 +38,8 @@ namespace MuonLab.Validation
 		public IEnumerable<Expression> GetViolations<T, TOuter>(Expression<Func<TOuter, T>> prefix, Expression<Func<T, IList<TItem>>> propertyExpression)
 		{
 			var invalidIndexes = this.GetInvalidIndexes();
-			var violations = new List<Expression>();
 
-			for (var i = 0; i < invalidIndexes.Count; i++)
-			{
-				var propExpr = this.GetViolationExpression(prefix, propertyExpression, i);
-				violations.Add(propExpr);
-			}
-
-			return violations;
+			return invalidIndexes.Select(t => this.GetViolationExpression(prefix, propertyExpression, t)).ToList();
 		}
 
 		Expression GetViolationExpression<T, TOuter>(Expression<Func<TOuter, T>> prefix, Expression<Func<T, IList<TItem>>> propertyExpression, int index)
