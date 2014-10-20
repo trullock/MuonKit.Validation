@@ -1,6 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
+// ReSharper disable once CheckNamespace
 namespace MuonLab.Validation
 {
 	public static class StringExtensions
@@ -152,7 +153,7 @@ namespace MuonLab.Validation
 		/// <returns></returns>
 		public static ICondition<string> IsEqualTo(this string self, string value, StringComparison comparison)
 		{
-			return self.Satisfies(s => s != null && s.Equals(value, comparison), "{val} must be the same as {arg1}");
+			return self.Satisfies(s => (s == null && value == null) || (s != null && s.Equals(value, comparison)), "{val} must be the same as {arg1}");
 		}
 
 		/// <summary>
@@ -165,7 +166,7 @@ namespace MuonLab.Validation
 		/// <returns></returns>
 		public static ICondition<string> IsEqualTo(this string self, string value, StringComparison comparison, string errorMessage)
 		{
-			return self.Satisfies(s => s != null && s.Equals(value, comparison), errorMessage);
+			return self.Satisfies(s => (s == null && value == null) || (s != null && s.Equals(value, comparison)), errorMessage);
 		}
 	}
 }
