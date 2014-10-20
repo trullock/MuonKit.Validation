@@ -32,7 +32,7 @@ namespace MuonLab.Validation
 
 		protected IViolation createViolation(PropertyCondition<T> condition, T entity, Expression property)
 		{
-			var errorMessage = condition.ErrorMessage;
+			var errorMessage = condition.ErrorMessage ?? "Invalid";
 
 			errorMessage = errorMessage.Replace("{val}", typeof (T).GetEnglishName());
 
