@@ -48,18 +48,23 @@ namespace MuonLab.Validation
 
 			var list = value as IList;
 
-			if (prefix != null)
-				throw new NotSupportedException("prefixes with list validation rules are not supported. send me a patch. kthx");
-
 			var violations = new List<IViolation>();
 
 			for(var i = 0; i < list.Count; i++)
 			{
 				var j = i;
 
-
 				var indexer = this.PropertyExpression.Combine(xs => xs[j], true);
-				var report = validator.Validate(value[i], indexer);
+
+				ValidationReport report;
+
+				if (prefix != null)
+				{
+					var propExp = prefix.Combine(indexer, true);
+					report = validator.Validate(value[i], propExp);
+				}
+				else
+					report = validator.Validate(value[i], indexer);
 
 				violations.AddRange(report.Violations);
 			}

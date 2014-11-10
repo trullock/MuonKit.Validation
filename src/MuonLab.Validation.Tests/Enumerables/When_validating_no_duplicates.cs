@@ -14,7 +14,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 		{
 			var testClass = new TestClass
 			{
-				List = new[] { new InnerClass { DupeVal = "hello" }, new InnerClass { DupeVal = "hello" }, new InnerClass() }
+				List = new[] { new InnerClass { DupeVal = "hello" }, new InnerClass(), new InnerClass { DupeVal = "hello" } }
 			};
 
 			var testClassValidator = new TestClassValidator();
@@ -31,7 +31,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var error2 = ReflectionHelper.PropertyChainToString(violations[1].Property, '.');
 
-			error2.ShouldEqual("List[1].DupeVal");
+			error2.ShouldEqual("List[2].DupeVal");
 		}
 
 		[Test]
