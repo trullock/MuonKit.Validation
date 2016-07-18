@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.Enumerables
@@ -19,7 +20,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var testClassValidator = new TestClassValidator();
 
-			var validationReport = testClassValidator.Validate(testClass);
+			var validationReport = Task.Run(() => testClassValidator.Validate(testClass)).Result;
 
 			validationReport.IsValid.ShouldBeFalse();
 
@@ -58,7 +59,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var outerTestClassValidator = new OuterTestClassValidator();
 
-			var validationReport = outerTestClassValidator.Validate(testContainer);
+			var validationReport = Task.Run(() => outerTestClassValidator.Validate(testContainer)).Result;
 
 			validationReport.IsValid.ShouldBeFalse();
 
@@ -85,7 +86,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var testClassValidator = new TestClassValidator();
 
-			var validationReport = testClassValidator.Validate(testClass);
+			var validationReport = Task.Run(() => testClassValidator.Validate(testClass)).Result;
 			
 			validationReport.IsValid.ShouldBeTrue();
 		}

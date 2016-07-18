@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.Nullable
@@ -19,7 +20,7 @@ namespace MuonLab.Validation.Tests.Nullable
 		{
 			var testClass = new TestClass(false);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("BeTrue");
 		}
@@ -29,7 +30,7 @@ namespace MuonLab.Validation.Tests.Nullable
 		{
 			var testClass = new TestClass(true);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			validationReport.IsValid.ShouldBeTrue();
 		}
@@ -39,7 +40,7 @@ namespace MuonLab.Validation.Tests.Nullable
 		{
 			var testClass = new TestClass(null);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			validationReport.IsValid.ShouldBeTrue();
 		}

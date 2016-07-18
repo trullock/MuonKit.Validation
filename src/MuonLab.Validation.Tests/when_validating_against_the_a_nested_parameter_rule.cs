@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests
@@ -13,7 +14,7 @@ namespace MuonLab.Validation.Tests
 		public void SetUp()
 		{
 			this.validator = new TestClassWrapperValidator();
-			this.report = this.validator.Validate(new TestClassWrapper());
+			this.report = Task.Run(() => this.validator.Validate(new TestClassWrapper())).Result;
 		}
 
 		[Test]

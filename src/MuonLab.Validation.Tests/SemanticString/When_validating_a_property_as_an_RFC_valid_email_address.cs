@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.SemanticString
@@ -42,7 +43,7 @@ namespace MuonLab.Validation.Tests.SemanticString
 		public void ensure_common_things_work(string email, bool result)
 		{
 			var testClass = new TestClass(email);
-			var validationReport = new TestClassValidator().Validate(testClass);
+			var validationReport = Task.Run(() => new TestClassValidator().Validate(testClass)).Result;
 			if (result != validationReport.IsValid)
 				Console.WriteLine(email);
 			Assert.AreEqual(result, validationReport.IsValid, email + " didn't pass");

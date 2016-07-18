@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.ReferenceType
@@ -19,7 +20,7 @@ namespace MuonLab.Validation.Tests.ReferenceType
 		{
 			var testClass = new TestClass(new object());
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
@@ -29,7 +30,7 @@ namespace MuonLab.Validation.Tests.ReferenceType
 		{
 			var testClass = new TestClass(null);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("Required");
 			validationReport.Violations.Skip(1).First().Error.Key.ShouldEqual("test key");

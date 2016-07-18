@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.String
@@ -19,7 +20,7 @@ namespace MuonLab.Validation.Tests.String
 		{
 			var testClass = new TestClass(null);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 			validationReport.Violations.First().Error.Key.ShouldEqual("Required");
 		}
 
@@ -28,7 +29,7 @@ namespace MuonLab.Validation.Tests.String
 		{
 			var testClass = new TestClass(string.Empty);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("Required");
 		}
@@ -38,7 +39,7 @@ namespace MuonLab.Validation.Tests.String
 		{
 			var testClass = new TestClass("a");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}

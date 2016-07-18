@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.IComparable
@@ -19,7 +20,7 @@ namespace MuonLab.Validation.Tests.IComparable
 		{
 			var testClass = new TestClass(1, 4);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
@@ -29,7 +30,7 @@ namespace MuonLab.Validation.Tests.IComparable
 		{
 			var testClass = new TestClass(4, 1);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
@@ -39,7 +40,7 @@ namespace MuonLab.Validation.Tests.IComparable
 		{
 			var testClass = new TestClass(2, 2);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("NotEqualTo");
 			validationReport.Violations.First().Error.Replacements["arg0"].Value.ToString().ShouldEqual("x.Value2");

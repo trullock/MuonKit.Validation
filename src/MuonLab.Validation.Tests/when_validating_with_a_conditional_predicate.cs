@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests
@@ -10,7 +11,7 @@ namespace MuonLab.Validation.Tests
 		{
 			var testClass = new TestClass(2, 2);
 
-			var validationReport = new ConditionalValidator(false).Validate(testClass);
+			var validationReport = Task.Run(() => new ConditionalValidator(false).Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
@@ -20,7 +21,7 @@ namespace MuonLab.Validation.Tests
 		{
 			var testClass = new TestClass(1, 2);
 
-			var validationReport = new ConditionalValidator(true).Validate(testClass);
+			var validationReport = Task.Run(() => new ConditionalValidator(false).Validate(testClass)).Result;
 
 			Assert.IsFalse(validationReport.IsValid);
 		}

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.SemanticString
@@ -19,7 +20,7 @@ namespace MuonLab.Validation.Tests.SemanticString
 		{
 			var testClass = new TestClass(null);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("ValidPostcode");
 		}
@@ -29,7 +30,7 @@ namespace MuonLab.Validation.Tests.SemanticString
 		{
 			var testClass = new TestClass(string.Empty);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("ValidPostcode");
 		}
@@ -39,7 +40,7 @@ namespace MuonLab.Validation.Tests.SemanticString
 		{
 			var testClass = new TestClass("M1 1AA");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
@@ -49,7 +50,7 @@ namespace MuonLab.Validation.Tests.SemanticString
 		{
 			var testClass = new TestClass("M60 1NW");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
@@ -59,7 +60,7 @@ namespace MuonLab.Validation.Tests.SemanticString
 		{
 			var testClass = new TestClass("CR2 6XH");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
@@ -69,7 +70,7 @@ namespace MuonLab.Validation.Tests.SemanticString
 		{
 			var testClass = new TestClass("DN55 1PT");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
@@ -79,7 +80,7 @@ namespace MuonLab.Validation.Tests.SemanticString
 		{
 			var testClass = new TestClass("W1A 1HQ");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
@@ -89,7 +90,7 @@ namespace MuonLab.Validation.Tests.SemanticString
 		{
 			var testClass = new TestClass("EC1A 1BB");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
@@ -99,7 +100,7 @@ namespace MuonLab.Validation.Tests.SemanticString
 		{
 			var testClass = new TestClass("GIR 0AA");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}

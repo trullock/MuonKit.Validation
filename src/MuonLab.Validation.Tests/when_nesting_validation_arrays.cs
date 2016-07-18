@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests
@@ -34,7 +35,7 @@ namespace MuonLab.Validation.Tests
 
 			var validator = new OuterClassValidator();
 
-			var validationReport = validator.Validate(outerClass);
+			var validationReport = Task.Run(() => validator.Validate(outerClass)).Result;
 
 			validationReport.IsValid.ShouldBeFalse();
 
