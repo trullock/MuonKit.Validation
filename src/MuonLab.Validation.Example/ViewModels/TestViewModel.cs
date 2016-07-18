@@ -1,4 +1,4 @@
-namespace MuonLab.Validation.Example.ViewModels
+	namespace MuonLab.Validation.Example.ViewModels
 {
 	public class TestViewModel
 	{

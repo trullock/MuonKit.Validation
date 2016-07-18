@@ -2,6 +2,13 @@ namespace MuonLab.Validation.Example.ViewModels
 {
 	public class TestViewModelValidator : Validator<TestViewModel>
 	{
+		IExampleValidationService exampleValidationService;
+
+		public TestViewModelValidator(IExampleValidationService exampleValidationService) 
+		{
+			this.exampleValidationService = exampleValidationService;
+		}
+
 		protected override void Rules()
 		{
 			this.Ensure(x => x.Email.IsNotNullOrEmpty()).And(()=>
