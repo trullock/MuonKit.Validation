@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.NullProperties
@@ -12,7 +13,7 @@ namespace MuonLab.Validation.Tests.NullProperties
 		public void SetUp()
 		{
 			this.validator = new TestClassValidator();
-			this.report = this.validator.Validate(new TestClass());
+			this.report = Task.Run(() => this.validator.Validate(new TestClass())).Result;
 		}
 
 		[Test]

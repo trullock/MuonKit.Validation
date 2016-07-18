@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.IComparable
@@ -19,7 +20,7 @@ namespace MuonLab.Validation.Tests.IComparable
 		{
 			var testClass = new TestClass();
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			validationReport.IsValid.ShouldBeTrue();
 		}

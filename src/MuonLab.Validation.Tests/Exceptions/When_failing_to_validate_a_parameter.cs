@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.Exceptions
@@ -20,7 +21,7 @@ namespace MuonLab.Validation.Tests.Exceptions
 		{
 			var testClass = new TestClass();
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			var errorDescriptor = validationReport.Violations.First().Error;
 			errorDescriptor.Key.ShouldEqual("ValidationError");

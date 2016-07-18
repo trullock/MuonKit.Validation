@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.Boolean
@@ -19,7 +20,7 @@ namespace MuonLab.Validation.Tests.Boolean
 		{
 			var testClass = new TestClass(true);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
@@ -29,7 +30,7 @@ namespace MuonLab.Validation.Tests.Boolean
 		{
 			var testClass = new TestClass(false);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			var violations = validationReport.Violations.ToArray();
 

@@ -21,7 +21,7 @@ namespace MuonLab.Validation.Tests
 		{
 			var testClass = new TestClass(1, 2);
 
-			var validationReport = Task.Run(() => new ConditionalValidator(false).Validate(testClass)).Result;
+			var validationReport = Task.Run(() => new ConditionalValidator(true).Validate(testClass)).Result;
 
 			Assert.IsFalse(validationReport.IsValid);
 		}

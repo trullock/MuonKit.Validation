@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.Enumerables
@@ -19,7 +20,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 		{
 			var testClass = new TestClass();
 
-			var report = this.validator.Validate(testClass);
+			var report = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			report.IsValid.ShouldBeFalse();
 		}
@@ -33,7 +34,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 			                		List = new[] { "an item" }
 			                	};
 
-			var report = this.validator.Validate(testClass);
+			var report = Task.Run(() => this.validator.Validate(testClass)).Result;
 
 			report.IsValid.ShouldBeTrue();
 		}
