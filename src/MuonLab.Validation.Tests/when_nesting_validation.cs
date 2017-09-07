@@ -10,7 +10,7 @@ namespace MuonLab.Validation.Tests
 	class when_nesting_validation
 	{
 		[Test]
-		public void CorrectPropertyChainGenerated()
+		public async Task CorrectPropertyChainGenerated()
 		{
 			var outerClass = new OuterClass { InnerClass = new InnerClass { InnerInnerClass = new InnerInnerClass{ InnerInnerInnerClass = new InnerInnerInnerClass
 			{
@@ -20,7 +20,7 @@ namespace MuonLab.Validation.Tests
 
 			var validator = new OuterClassValidator();
 
-			var validationReport = Task.Run(() => validator.Validate(outerClass)).Result;
+			var validationReport = await validator.Validate(outerClass);
 
 			validationReport.IsValid.ShouldBeFalse();
 

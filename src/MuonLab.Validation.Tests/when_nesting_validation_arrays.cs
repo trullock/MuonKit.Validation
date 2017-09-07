@@ -10,7 +10,7 @@ namespace MuonLab.Validation.Tests
 	class when_nesting_validation_arrays
 	{
 		[Test]
-		public void CorrectPropertyChainGenerated()
+		public async Task CorrectPropertyChainGenerated()
 		{
 			var outerClass = new Language
 			{
@@ -35,7 +35,7 @@ namespace MuonLab.Validation.Tests
 
 			var validator = new OuterClassValidator();
 
-			var validationReport = Task.Run(() => validator.Validate(outerClass)).Result;
+			var validationReport = await validator.Validate(outerClass);
 
 			validationReport.IsValid.ShouldBeFalse();
 

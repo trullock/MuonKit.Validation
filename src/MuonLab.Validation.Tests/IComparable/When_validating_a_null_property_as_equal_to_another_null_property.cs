@@ -16,11 +16,11 @@ namespace MuonLab.Validation.Tests.IComparable
 		}
 
 		[Test]
-		public void should_be_valid()
+		public async Task should_be_valid()
 		{
 			var testClass = new TestClass();
 
-			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.IsValid.ShouldBeTrue();
 		}

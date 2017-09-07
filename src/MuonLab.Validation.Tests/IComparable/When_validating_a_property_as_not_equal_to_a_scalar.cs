@@ -16,33 +16,33 @@ namespace MuonLab.Validation.Tests.IComparable
 		}
 
 		[Test]
-		public void test_1_not_equals_4_returns_true()
+		public async Task test_1_not_equals_4_returns_true()
 		{
 			var testClass = new TestClass(1);
 
-			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
+			var validationReport = await this.validator.Validate(testClass);
 
-			Assert.IsTrue(validationReport.IsValid);
+            Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void test_8_not_equals_4_returns_true()
+		public async Task test_8_not_equals_4_returns_true()
 		{
 			var testClass = new TestClass(8);
 
-			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
+			var validationReport = await this.validator.Validate(testClass);
 
-			Assert.IsTrue(validationReport.IsValid);
+            Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void test_4_not_equals_4_returns_false()
+		public async Task test_4_not_equals_4_returns_false()
 		{
 			var testClass = new TestClass(4);
 
-			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
+			var validationReport = await this.validator.Validate(testClass);
 
-			validationReport.Violations.First().Error.Key.ShouldEqual("NotEqualTo");
+            validationReport.Violations.First().Error.Key.ShouldEqual("NotEqualTo");
 			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("4");
 		}
 

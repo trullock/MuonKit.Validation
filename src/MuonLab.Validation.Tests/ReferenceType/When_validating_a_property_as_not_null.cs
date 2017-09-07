@@ -16,21 +16,21 @@ namespace MuonLab.Validation.Tests.ReferenceType
 		}
 
 		[Test]
-		public void ensure_not_null_returns_true()
+		public async Task ensure_not_null_returns_true()
 		{
 			var testClass = new TestClass(new object());
 
-			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void ensure_not_null_returns_false()
+		public async Task ensure_not_null_returns_false()
 		{
 			var testClass = new TestClass(null);
 
-			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("Required");
 			validationReport.Violations.Skip(1).First().Error.Key.ShouldEqual("test key");

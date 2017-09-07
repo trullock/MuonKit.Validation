@@ -17,22 +17,22 @@ namespace MuonLab.Validation.Tests.String
 		}
 
 		[Test]
-		public void ensure_mismatch_fail_validation()
+		public async Task ensure_mismatch_fail_validation()
 		{
 			var testClass = new TestClass("different");
 
-			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("error");
 		}
 
 
 		[Test]
-		public void ensure_match_passes_validation()
+		public async Task ensure_match_passes_validation()
 		{
 			var testClass = new TestClass("HeLlO");
 
-			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}

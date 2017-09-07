@@ -17,11 +17,11 @@ namespace MuonLab.Validation.Tests.Exceptions
 		}
 
 		[Test]
-		public void ensure_exception_is_caught_and_reported()
+		public async Task ensure_exception_is_caught_and_reported()
 		{
 			var testClass = new TestClass();
 
-			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
+			var validationReport = await this.validator.Validate(testClass);
 
 			var errorDescriptor = validationReport.Violations.First().Error;
 			errorDescriptor.Key.ShouldEqual("ValidationError");

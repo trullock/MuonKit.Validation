@@ -16,21 +16,21 @@ namespace MuonLab.Validation.Tests.Boolean
 		}
 
 		[Test]
-		public void ensure_false_returns_true()
+		public async Task ensure_false_returns_true()
 		{
 			var testClass = new TestClass(false);
 
-			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void ensure_true_returns_false()
+		public async Task ensure_true_returns_false()
 		{
 			var testClass = new TestClass(true);
 
-			var validationReport = Task.Run(() => this.validator.Validate(testClass)).Result;
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("BeFalse");
 		}

@@ -11,7 +11,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 	public class When_validating_no_duplicates
 	{
 		[Test]
-		public void DuplicateRecordsShouldFail()
+		public async Task DuplicateRecordsShouldFail()
 		{
 			var testClass = new TestClass
 			{
@@ -20,7 +20,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var testClassValidator = new TestClassValidator();
 
-			var validationReport = Task.Run(() => testClassValidator.Validate(testClass)).Result;
+			var validationReport = await testClassValidator.Validate(testClass);
 
 			validationReport.IsValid.ShouldBeFalse();
 
@@ -36,7 +36,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 		}
 
 		[Test]
-		public void PropertyChainShouldContainPrefixes()
+		public async Task PropertyChainShouldContainPrefixes()
 		{
 			var testContainer = new OuterTestClass
 			{
@@ -59,7 +59,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var outerTestClassValidator = new OuterTestClassValidator();
 
-			var validationReport = Task.Run(() => outerTestClassValidator.Validate(testContainer)).Result;
+			var validationReport = await outerTestClassValidator.Validate(testContainer);
 
 			validationReport.IsValid.ShouldBeFalse();
 
@@ -77,7 +77,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 		}
 
 		[Test]
-		public void NonDuplicateRecordsShouldPass()
+		public async Task NonDuplicateRecordsShouldPass()
 		{
 			var testClass = new TestClass
 			{
@@ -86,7 +86,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var testClassValidator = new TestClassValidator();
 
-			var validationReport = Task.Run(() => testClassValidator.Validate(testClass)).Result;
+			var validationReport = await testClassValidator.Validate(testClass);
 			
 			validationReport.IsValid.ShouldBeTrue();
 		}

@@ -8,7 +8,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 	public class When_validating_complex_types
 	{
 		[Test]
-		public void InnerViolationsShouldBeReportedCorrectly()
+		public async Task InnerViolationsShouldBeReportedCorrectly()
 		{
 			var testClass = new TestClass
 			                	{
@@ -17,7 +17,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var testClassValidator = new TestClassValidator();
 
-			var validationReport = Task.Run(() => testClassValidator.Validate(testClass)).Result;
+			var validationReport = await testClassValidator.Validate(testClass);
 
 			validationReport.IsValid.ShouldBeFalse();
 
