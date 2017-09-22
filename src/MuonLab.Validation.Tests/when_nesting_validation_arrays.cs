@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests
@@ -9,7 +10,7 @@ namespace MuonLab.Validation.Tests
 	class when_nesting_validation_arrays
 	{
 		[Test]
-		public void CorrectPropertyChainGenerated()
+		public async Task CorrectPropertyChainGenerated()
 		{
 			var outerClass = new Language
 			{
@@ -34,7 +35,7 @@ namespace MuonLab.Validation.Tests
 
 			var validator = new OuterClassValidator();
 
-			var validationReport = validator.Validate(outerClass);
+			var validationReport = await validator.Validate(outerClass);
 
 			validationReport.IsValid.ShouldBeFalse();
 

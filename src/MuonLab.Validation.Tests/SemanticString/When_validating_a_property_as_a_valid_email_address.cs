@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.SemanticString
@@ -15,49 +16,49 @@ namespace MuonLab.Validation.Tests.SemanticString
 		}
 
 		[Test]
-		public void ensure_nulls_fail_validation()
+		public async Task ensure_nulls_fail_validation()
 		{
 			var testClass = new TestClass(null);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("ValidEmail");
 		}
 
 		[Test]
-		public void ensure_empty_string_fail_validation()
+		public async Task ensure_empty_string_fail_validation()
 		{
 			var testClass = new TestClass(string.Empty);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("ValidEmail");
 		}
 
 		[Test]
-		public void ensure_valid_email_passes_validation()
+		public async Task ensure_valid_email_passes_validation()
 		{
 			var testClass = new TestClass("trullock@gmail.com");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void ensure_invalid_email2_fails_validation()
+		public async Task ensure_invalid_email2_fails_validation()
 		{
 			var testClass = new TestClass("trullock@gmail@com");
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("ValidEmail");
 		}
 
 		[Test]
-		public void ensure_invalid_email3_fails_validation()
+		public async Task ensure_invalid_email3_fails_validation()
 		{
 			var testClass = new TestClass("muonlab.com");
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("ValidEmail");
 		}

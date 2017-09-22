@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.String
@@ -15,43 +16,43 @@ namespace MuonLab.Validation.Tests.String
 		}
 
 		[Test]
-		public void ensure_nulls_fail_validation()
+		public async Task ensure_nulls_fail_validation()
 		{
 			var testClass = new TestClass(null);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("MinLength");
 			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("5");
 		}
 
 		[Test]
-		public void ensure_strings_that_are_too_short_fail_validation()
+		public async Task ensure_strings_that_are_too_short_fail_validation()
 		{
 			var testClass = new TestClass("1234");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("MinLength");
 			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("5");
 		}
 
 		[Test]
-		public void ensure_strings_that_are_the_minimum_length_pass_validation()
+		public async Task ensure_strings_that_are_the_minimum_length_pass_validation()
 		{
 			var testClass = new TestClass("12345");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void ensure_strings_that_are_longer_than_the_minimum_length_pass_validation()
+		public async Task ensure_strings_that_are_longer_than_the_minimum_length_pass_validation()
 		{
 			var testClass = new TestClass("123456");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}

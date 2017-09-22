@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.Enumerables
@@ -7,7 +8,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 	public class When_validating_complex_types
 	{
 		[Test]
-		public void InnerViolationsShouldBeReportedCorrectly()
+		public async Task InnerViolationsShouldBeReportedCorrectly()
 		{
 			var testClass = new TestClass
 			                	{
@@ -16,7 +17,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var testClassValidator = new TestClassValidator();
 
-			var validationReport = testClassValidator.Validate(testClass);
+			var validationReport = await testClassValidator.Validate(testClass);
 
 			validationReport.IsValid.ShouldBeFalse();
 

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests
@@ -6,21 +7,21 @@ namespace MuonLab.Validation.Tests
 	public class when_validating_with_a_conditional_predicate
 	{
 		[Test]
-		public void when_a_condition_is_false_the_validation_rule_should_not_be_run()
+		public async Task when_a_condition_is_false_the_validation_rule_should_not_be_run()
 		{
 			var testClass = new TestClass(2, 2);
 
-			var validationReport = new ConditionalValidator(false).Validate(testClass);
+			var validationReport = await new ConditionalValidator(false).Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void when_a_condition_is_true_the_validation_rule_should_be_run()
+		public async Task when_a_condition_is_true_the_validation_rule_should_be_run()
 		{
 			var testClass = new TestClass(1, 2);
 
-			var validationReport = new ConditionalValidator(true).Validate(testClass);
+			var validationReport = await new ConditionalValidator(true).Validate(testClass);
 
 			Assert.IsFalse(validationReport.IsValid);
 		}

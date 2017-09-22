@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.SemanticString
@@ -39,10 +40,10 @@ namespace MuonLab.Validation.Tests.SemanticString
 		[TestCase(@"""Ima.Fool""@example.com", true)]
 		[TestCase(@"""Ima Fool""@example.com", true)]
 		[TestCase(@"Ima Fool@example.com", false)]
-		public void ensure_common_things_work(string email, bool result)
+		public async Task ensure_common_things_work(string email, bool result)
 		{
 			var testClass = new TestClass(email);
-			var validationReport = new TestClassValidator().Validate(testClass);
+			var validationReport = await new TestClassValidator().Validate(testClass);
 			if (result != validationReport.IsValid)
 				Console.WriteLine(email);
 			Assert.AreEqual(result, validationReport.IsValid, email + " didn't pass");

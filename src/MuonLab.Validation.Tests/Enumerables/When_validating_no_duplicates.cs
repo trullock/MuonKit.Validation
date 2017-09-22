@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.Enumerables
@@ -10,7 +11,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 	public class When_validating_no_duplicates
 	{
 		[Test]
-		public void DuplicateRecordsShouldFail()
+		public async Task DuplicateRecordsShouldFail()
 		{
 			var testClass = new TestClass
 			{
@@ -19,7 +20,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var testClassValidator = new TestClassValidator();
 
-			var validationReport = testClassValidator.Validate(testClass);
+			var validationReport = await testClassValidator.Validate(testClass);
 
 			validationReport.IsValid.ShouldBeFalse();
 
@@ -35,7 +36,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 		}
 
 		[Test]
-		public void PropertyChainShouldContainPrefixes()
+		public async Task PropertyChainShouldContainPrefixes()
 		{
 			var testContainer = new OuterTestClass
 			{
@@ -58,7 +59,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var outerTestClassValidator = new OuterTestClassValidator();
 
-			var validationReport = outerTestClassValidator.Validate(testContainer);
+			var validationReport = await outerTestClassValidator.Validate(testContainer);
 
 			validationReport.IsValid.ShouldBeFalse();
 
@@ -76,7 +77,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 		}
 
 		[Test]
-		public void NonDuplicateRecordsShouldPass()
+		public async Task NonDuplicateRecordsShouldPass()
 		{
 			var testClass = new TestClass
 			{
@@ -85,7 +86,7 @@ namespace MuonLab.Validation.Tests.Enumerables
 
 			var testClassValidator = new TestClassValidator();
 
-			var validationReport = testClassValidator.Validate(testClass);
+			var validationReport = await testClassValidator.Validate(testClass);
 			
 			validationReport.IsValid.ShouldBeTrue();
 		}

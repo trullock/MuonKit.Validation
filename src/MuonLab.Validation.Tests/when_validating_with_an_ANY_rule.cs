@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests
@@ -15,31 +16,31 @@ namespace MuonLab.Validation.Tests
 		}
 
 		[Test]
-		public void when_the_first_condition_is_true_the_second_shoudlnt_be_run()
+		public async Task when_the_first_condition_is_true_the_second_shoudlnt_be_run()
 		{
 			var testClass = new TestClass(1, 2);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.Count().ShouldEqual(0);
 		}
 
 		[Test]
-		public void when_the_first_condition_is_false_and_the_second_is_true_there_should_be_no_errors()
+		public async Task when_the_first_condition_is_false_and_the_second_is_true_there_should_be_no_errors()
 		{
 			var testClass = new TestClass(2, 3);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.Count().ShouldEqual(0);
 		}
 
 		[Test]
-		public void whe_all_conditions_are_false_all_errors_should_show()
+		public async Task whe_all_conditions_are_false_all_errors_should_show()
 		{
 			var testClass = new TestClass(0, 2);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.Count().ShouldEqual(2);
 		}

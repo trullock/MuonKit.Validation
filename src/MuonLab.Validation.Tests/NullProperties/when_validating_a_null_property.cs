@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.NullProperties
@@ -9,10 +10,10 @@ namespace MuonLab.Validation.Tests.NullProperties
 		private ValidationReport report;
 
 		[SetUp]
-		public void SetUp()
+		public async Task SetUp()
 		{
 			this.validator = new TestClassValidator();
-			this.report = this.validator.Validate(new TestClass());
+			this.report = await this.validator.Validate(new TestClass());
 		}
 
 		[Test]

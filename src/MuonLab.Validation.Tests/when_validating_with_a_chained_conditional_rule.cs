@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests
@@ -15,11 +16,11 @@ namespace MuonLab.Validation.Tests
 		}
 
 		[Test]
-		public void when_a_condition_is_false_the_validation_rule_should_not_be_run_and_the_violation_should_appear()
+		public async Task when_a_condition_is_false_the_validation_rule_should_not_be_run_and_the_violation_should_appear()
 		{
 			var testClass = new TestClass(2, 2);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("EqualTo");
 			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("1");
@@ -28,11 +29,11 @@ namespace MuonLab.Validation.Tests
 		}
 
 		[Test]
-		public void when_a_condition_is_true_the_validation_rule_should_be_run()
+		public async Task when_a_condition_is_true_the_validation_rule_should_be_run()
 		{
 			var testClass = new TestClass(1, 2);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("EqualTo");
 			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("3");

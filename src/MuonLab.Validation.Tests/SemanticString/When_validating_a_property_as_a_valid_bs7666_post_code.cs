@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.SemanticString
@@ -15,91 +16,91 @@ namespace MuonLab.Validation.Tests.SemanticString
 		}
 
 		[Test]
-		public void ensure_nulls_fail_validation()
+		public async Task ensure_nulls_fail_validation()
 		{
 			var testClass = new TestClass(null);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("ValidPostcode");
 		}
 
 		[Test]
-		public void ensure_empty_string_fail_validation()
+		public async Task ensure_empty_string_fail_validation()
 		{
 			var testClass = new TestClass(string.Empty);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("ValidPostcode");
 		}
 
 		[Test]
-		public void ensure_ANNAA_passes_validation()
+		public async Task ensure_ANNAA_passes_validation()
 		{
 			var testClass = new TestClass("M1 1AA");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void ensure_ANNNAA_passes_validation()
+		public async Task ensure_ANNNAA_passes_validation()
 		{
 			var testClass = new TestClass("M60 1NW");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void ensure_AANNAA_passes_validation()
+		public async Task ensure_AANNAA_passes_validation()
 		{
 			var testClass = new TestClass("CR2 6XH");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void ensure_AANNNAA_passes_validation()
+		public async Task ensure_AANNNAA_passes_validation()
 		{
 			var testClass = new TestClass("DN55 1PT");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void ensure_ANANAA_passes_validation()
+		public async Task ensure_ANANAA_passes_validation()
 		{
 			var testClass = new TestClass("W1A 1HQ");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void ensure_AANANAA_passes_validation()
+		public async Task ensure_AANANAA_passes_validation()
 		{
 			var testClass = new TestClass("EC1A 1BB");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public void ensure_GIR0AA_passes_validation()
+		public async Task ensure_GIR0AA_passes_validation()
 		{
 			var testClass = new TestClass("GIR 0AA");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}

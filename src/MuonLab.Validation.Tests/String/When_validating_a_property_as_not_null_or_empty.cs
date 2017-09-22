@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.String
@@ -15,30 +16,30 @@ namespace MuonLab.Validation.Tests.String
 		}
 
 		[Test]
-		public void ensure_nulls_fail_validation()
+		public async Task ensure_nulls_fail_validation()
 		{
 			var testClass = new TestClass(null);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 			validationReport.Violations.First().Error.Key.ShouldEqual("Required");
 		}
 
 		[Test]
-		public void ensure_empty_string_fail_validation()
+		public async Task ensure_empty_string_fail_validation()
 		{
 			var testClass = new TestClass(string.Empty);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("Required");
 		}
 
 		[Test]
-		public void ensure_not_null_or_empty_passes_validation()
+		public async Task ensure_not_null_or_empty_passes_validation()
 		{
 			var testClass = new TestClass("a");
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			Assert.IsTrue(validationReport.IsValid);
 		}

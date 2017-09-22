@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.Exceptions
@@ -16,11 +17,11 @@ namespace MuonLab.Validation.Tests.Exceptions
 		}
 
 		[Test]
-		public void ensure_exception_is_caught_and_reported()
+		public async Task ensure_exception_is_caught_and_reported()
 		{
 			var testClass = new TestClass();
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			var errorDescriptor = validationReport.Violations.First().Error;
 			errorDescriptor.Key.ShouldEqual("ValidationError");

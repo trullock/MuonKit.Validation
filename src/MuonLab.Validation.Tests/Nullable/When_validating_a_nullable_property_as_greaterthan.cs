@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.Nullable
@@ -15,11 +16,11 @@ namespace MuonLab.Validation.Tests.Nullable
 		}
 
 		[Test]
-		public void ensure_0_returns_false()
+		public async Task ensure_0_returns_false()
 		{
 			var testClass = new TestClass(0);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 			var violations = validationReport.Violations.ToArray();
 
 			violations[0].Error.Key.ShouldEqual("GreaterThanEq");
@@ -27,21 +28,21 @@ namespace MuonLab.Validation.Tests.Nullable
 		}
 
 		[Test]
-		public void ensure_1_returns_true()
+		public async Task ensure_1_returns_true()
 		{
 			var testClass = new TestClass(1);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.IsValid.ShouldBeTrue();
 		}
 
 		[Test]
-		public void ensure_null_returns_true()
+		public async Task ensure_null_returns_true()
 		{
 			var testClass = new TestClass(null);
 
-			var validationReport = this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.IsValid.ShouldBeTrue();
 		}

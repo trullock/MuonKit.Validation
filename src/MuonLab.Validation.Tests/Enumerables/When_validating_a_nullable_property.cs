@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests.Enumerables
@@ -15,25 +16,25 @@ namespace MuonLab.Validation.Tests.Enumerables
 		}
 
 		[Test]
-		public void an_empty_list_should_be_false()
+		public async Task an_empty_list_should_be_false()
 		{
 			var testClass = new TestClass();
 
-			var report = this.validator.Validate(testClass);
+			var report = await this.validator.Validate(testClass);
 
 			report.IsValid.ShouldBeFalse();
 		}
 
 
 		[Test]
-		public void an_non_empty_list_should_be_true()
+		public async Task an_non_empty_list_should_be_true()
 		{
 			var testClass = new TestClass
 			                	{
 			                		List = new[] { "an item" }
 			                	};
 
-			var report = this.validator.Validate(testClass);
+			var report = await this.validator.Validate(testClass);
 
 			report.IsValid.ShouldBeTrue();
 		}
