@@ -59,12 +59,12 @@ namespace MuonLab.Validation
 				if (prefix != null)
 				{
 					var indexer = prefix.Combine(this.PropertyExpression.Combine(xs => xs[j], true), true);
-					report = await validator.Validate(value[i], indexer);
+					report = await validator.Validate(value[i], indexer).ConfigureAwait(false);
 				}
 				else
 				{
 					var indexer = this.PropertyExpression.Combine(xs => xs[j], true);
-					report = await validator.Validate(value[i], indexer);
+					report = await validator.Validate(value[i], indexer).ConfigureAwait(false);
 				}
 				
 				violations.AddRange(report.Violations);

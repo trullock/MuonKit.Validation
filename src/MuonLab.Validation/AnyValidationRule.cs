@@ -21,7 +21,7 @@ namespace MuonLab.Validation
 
 			foreach (var rule in this.rules)
 			{
-				var ruleViolations = await rule.Validate(entity, prefix);
+				var ruleViolations = await rule.Validate(entity, prefix).ConfigureAwait(false);
 				violations.AddRange(ruleViolations);
 
 				if(!ruleViolations.Any())

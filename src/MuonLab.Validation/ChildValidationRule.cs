@@ -28,11 +28,11 @@ namespace MuonLab.Validation
 			if(prefix != null)
 			{
 				var nextPrefix = prefix.Combine(this.PropertyExpression, true);
-				report = await validator.Validate(value, nextPrefix);
+				report = await validator.Validate(value, nextPrefix).ConfigureAwait(false);
 			}
 			else
 			{
-				report = await validator.Validate(value, this.PropertyExpression);
+				report = await validator.Validate(value, this.PropertyExpression).ConfigureAwait(false);
 			}
 
 			

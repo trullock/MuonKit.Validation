@@ -36,7 +36,7 @@ namespace MuonLab.Validation
 
 			try
 			{
-				valid = await condition.Condition.Invoke(value);
+				valid = await condition.Condition.Invoke(value).ConfigureAwait(false);
 			}
 			catch (NullReferenceException)
 			{

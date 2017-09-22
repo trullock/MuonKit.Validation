@@ -23,7 +23,7 @@ namespace MuonLab.Validation
 			var genericTypeDefinition = methodCallExpression.Method.ReturnType.GetGenericTypeDefinition();
 			var rule = this.GetRule(genericTypeDefinition, methodCallExpression);
 
-			var violations = await rule.Validate(entity, prefix);
+			var violations = await rule.Validate(entity, prefix).ConfigureAwait(false);
 
 			// TODO: wtf? I dont understand why this seems backwards
 			if (violations.Any()) 
@@ -31,7 +31,7 @@ namespace MuonLab.Validation
 
 			var violations1 = new List<IViolation>();
 			foreach (var crule in this.rules)
-				violations1.AddRange(await crule.Validate(entity, prefix));
+				violations1.AddRange(await crule.Validate(entity, prefix).ConfigureAwait(false));
 			return violations1;
 		}
 

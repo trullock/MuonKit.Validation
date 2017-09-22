@@ -23,7 +23,7 @@ namespace MuonLab.Validation
 			if (condition())
 			{
 				foreach (var crule in this.rules)
-					violations1.AddRange(await crule.Validate(entity, prefix));
+					violations1.AddRange(await crule.Validate(entity, prefix).ConfigureAwait(false));
 			}
 
 			return violations1;

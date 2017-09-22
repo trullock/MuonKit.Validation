@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace MuonLab.Validation.Tests
@@ -10,10 +11,10 @@ namespace MuonLab.Validation.Tests
 		ValidationReport report;
 
 		[SetUp]
-		public void SetUp()
+		public async Task SetUp()
 		{
 			this.validator = new TestValidator();
-			this.report = this.validator.Validate(new TestClass { Age = 12 });
+			this.report = await this.validator.Validate(new TestClass { Age = 12 });
 		}
 
 		[Test]

@@ -21,7 +21,7 @@ namespace MuonLab.Validation
 
 			try
 			{
-				valid = await condition.Condition.Invoke(entity);
+				valid = await condition.Condition.Invoke(entity).ConfigureAwait(false);
 			}
 			catch (Exception e)
 			{
