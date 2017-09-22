@@ -10,10 +10,10 @@ namespace MuonLab.Validation.Tests
 		private ValidationReport report;
 
 		[SetUp]
-		public async Task SetUp()
+		public void SetUp()
 		{
 			this.validator = new TestValidator();
-			this.report = await this.validator.Validate(new TestClass());
+			this.report = this.validator.Validate(new TestClass()).Result;
 		}
 
 		[Test]
@@ -26,10 +26,10 @@ namespace MuonLab.Validation.Tests
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.Age.Satisfies(p => lol(), "should work!"));
+				Ensure(x => x.Age.Satisfies(p => AsyncCheck(), "should work!"));
 			}
 
-			async Task<bool> lol()
+			async Task<bool> AsyncCheck()
 			{
 				return true;
 			}

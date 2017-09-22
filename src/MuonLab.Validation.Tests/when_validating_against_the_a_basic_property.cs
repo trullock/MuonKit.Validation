@@ -10,10 +10,10 @@ namespace MuonLab.Validation.Tests
 		private ValidationReport report;
 
 		[SetUp]
-		public async Task SetUp()
+		public void SetUp()
 		{
 			this.validator = new TestValidator();
-			this.report = await this.validator.Validate(new TestClass());
+			this.report = this.validator.Validate(new TestClass()).Result;
 		}
 
 		[Test]

@@ -10,7 +10,7 @@ namespace MuonLab.Validation.Tests.Boolean
 		private TestClassValidator validator;
 
 		[SetUp]
-		public async Task SetUp()
+		public void SetUp()
 		{
 			this.validator = new TestClassValidator();
 		}
