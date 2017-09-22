@@ -4,12 +4,12 @@ namespace MuonLab.Validation.Example.ViewModels
 	{
 		protected override void Rules()
 		{
-			this.Ensure(x => x.Email.IsNotNullOrEmpty()).And(()=>
+			this.Ensure(x => x.Email.IsNotNullOrEmpty()).And(() =>
 				this.Ensure(x => x.Email.IsAValidEmailAddress()));
 
 			this.Ensure(x => x.Password.HasMinimumLength(8));
 
-			this.Ensure(x => x.Password.IsNotNullOrEmpty()).And(() => 
+			this.Ensure(x => x.Password.IsNotNullOrEmpty()).And(() =>
 				this.Ensure(x => x.ConfirmPassword.IsEqualTo(x.Password)));
 		}
 	}
