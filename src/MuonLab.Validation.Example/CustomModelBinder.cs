@@ -1,8 +1,5 @@
-using System;
-using System.ComponentModel;
 using System.Globalization;
-using System.Linq.Expressions;
-using System.Reflection;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using MuonLab.Validation.Example.ViewModels;
 
@@ -24,7 +21,7 @@ namespace MuonLab.Validation.Example
 				return model;
 
 			// validate!
-			var validationReport = validator.Validate(model);
+			var validationReport = Task.Run(() => validator.Validate(model)).Result;
 
 			// valid?
 			if (!validationReport.IsValid)

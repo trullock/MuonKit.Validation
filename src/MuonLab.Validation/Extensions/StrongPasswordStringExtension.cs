@@ -25,7 +25,7 @@ namespace MuonLab.Validation
 			public StrongPasswordCondition(int minimumLength, bool requireCaseVariation, bool requireNumeric, bool requireNonAlphanumeric) : 
 				base(null, null)
 			{
-				this.Condition = s =>
+				this.Condition = async s =>
 					{
 						if (s != null)
 						{

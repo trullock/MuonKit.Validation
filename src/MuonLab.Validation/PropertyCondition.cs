@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace MuonLab.Validation
 {
@@ -9,9 +10,9 @@ namespace MuonLab.Validation
 
 	public class PropertyCondition<TValue> : PropertyCondition, ICondition<TValue>
 	{
-		public Func<TValue, bool> Condition { get; protected set; }
+		public Func<TValue, Task<bool>> Condition { get; protected set; }
 
-		public PropertyCondition(Func<TValue, bool> condition, string errorKey)
+		public PropertyCondition(Func<TValue, Task<bool>> condition, string errorKey)
 		{
 			this.Condition = condition;
 			this.ErrorKey = errorKey;
