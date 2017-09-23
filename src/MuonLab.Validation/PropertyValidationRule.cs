@@ -70,10 +70,12 @@ namespace MuonLab.Validation
 
 		ErrorDescriptor.Replacement EvaluateExpression(Expression expression, T entity)
 		{
-			if (expression is MemberExpression)
-				return new ErrorDescriptor.Replacement(ErrorDescriptor.Replacement.ReplacementType.Member,
-					expression as MemberExpression);
+			if (expression.NodeType == ExpressionType.Convert)
+				expression = (expression as UnaryExpression).Operand;
 
+			if (expression is MemberExpression)
+				return new ErrorDescriptor.Replacement(ErrorDescriptor.Replacement.ReplacementType.Member, expression as MemberExpression);
+			
 			var lambda = Expression.Lambda(expression, this.validationExpression.Parameters[0]);
 			var value = lambda.Compile().DynamicInvoke(entity);
 

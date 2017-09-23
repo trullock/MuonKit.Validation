@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 // ReSharper disable once CheckNamespace
@@ -26,7 +27,81 @@ namespace MuonLab.Validation
 		{
 			return self.Satisfies(s => !string.IsNullOrEmpty(s), errorKey);
 		}
-		
+
+		/// <summary>
+		/// Ensure the property is not null or only whitespace
+		/// </summary>
+		/// <param name="self"></param>
+		/// <returns></returns>
+		public static ICondition<string> IsNotNullOrWhitespace(this string self)
+		{
+			return self.IsNotNullOrWhitespace("Required");
+		}
+
+		/// <summary>
+		/// Ensure the property is a valid email address
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="errorKey"></param>
+		/// <returns></returns>
+		public static ICondition<string> IsNotNullOrWhitespace(this string self, string errorKey)
+		{
+			return self.Satisfies(s => !string.IsNullOrWhiteSpace(s), errorKey);
+		}
+
+		/// <summary>
+		/// Ensure the property is a null or empty
+		/// </summary>
+		/// <param name="self"></param>
+		/// <returns></returns>
+		public static ICondition<string> IsNullOrIsEmpty(this string self)
+		{
+			return self.IsNullOrIsEmpty("BeEmpty");
+		}
+
+		/// <summary>
+		/// Ensure the property is a null or empty
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="errorKey"></param>
+		/// <returns></returns>
+		public static ICondition<string> IsNullOrIsEmpty(this string self, string errorKey)
+		{
+			return self.Satisfies(s => string.IsNullOrEmpty(s), errorKey);
+		}
+
+
+		/// <summary>
+		/// Ensure the property is valid base64
+		/// </summary>
+		public static ICondition<string> IsValidBase64(this string self)
+		{
+			return self.IsValidBase64("InvalidBase64");
+		}
+
+		/// <summary>
+		/// Ensure the property is valid base64
+		/// </summary>
+		public static ICondition<string> IsValidBase64(this string self, string errorKey)
+		{
+			return self.Satisfies(s => CheckIsValidBase64(s), errorKey);
+		}
+
+		static bool CheckIsValidBase64(string input)
+		{
+			try
+			{
+				Convert.FromBase64String(input);
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+
+
 		/// <summary>
 		/// Ensure the property has a maximum character length
 		/// </summary>
@@ -48,6 +123,17 @@ namespace MuonLab.Validation
 		public static ICondition<string> HasMaximumLength(this string self, int maxLength, string errorKey)
 		{
 			return self.Satisfies(s => (s ?? string.Empty).Length <= maxLength, errorKey);
+		}
+
+		/// <summary>
+		/// Ensure the property has a maximum character length per line
+		/// </summary>
+		/// <param name="self"></param>
+		/// <param name="maxLineLength"></param>
+		/// <returns></returns>
+		public static ICondition<string> HasMaximumLineLength(this string self, int maxLineLength)
+		{
+			return self.Satisfies(s => (s ?? string.Empty).Split('\r', '\n').Max(x => x.Length) <= maxLineLength, string.Format("Each line cannot exceed {0} characters", maxLineLength));
 		}
 
 		/// <summary>

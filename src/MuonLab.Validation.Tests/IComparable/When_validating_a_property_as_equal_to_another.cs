@@ -51,12 +51,12 @@ namespace MuonLab.Validation.Tests.IComparable
 
 		private class TestClass
 		{
-			public int value { get; set; }
-			public int Value2 { get; set; }
+			public int Value { get; set; }
+			public int? Value2 { get; set; }
 
 			public TestClass(int value, int value2)
 			{
-				this.value = value;
+				this.Value = value;
 				this.Value2 = value2;
 			}
 		}
@@ -65,7 +65,14 @@ namespace MuonLab.Validation.Tests.IComparable
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.value.IsEqualTo(x.Value2));
+				// int - int
+				Ensure(x => x.Value.IsEqualTo(x.Value));
+				// int - int?
+				Ensure(x => x.Value.IsEqualTo(x.Value2));
+				// int? - int
+				Ensure(x => x.Value2.IsEqualTo(x.Value));
+				// int? - int?
+				Ensure(x => x.Value2.IsEqualTo(x.Value2));
 			}
 		}
 	}
