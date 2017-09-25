@@ -2,10 +2,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace MuonLab.Validation.Tests.IComparable
+namespace MuonLab.Validation.Tests.IComparable.GreaterThanEq
 {
 	[TestFixture]
-	public class When_validating_a_property_has_greater_than_or_equal_to_another
+	public class When_validating_a_property_has_greater_than_or_equal_to_a_nullable_scalar
 	{
 		private TestClassValidator validator;
 
@@ -18,18 +18,17 @@ namespace MuonLab.Validation.Tests.IComparable
 		[Test]
 		public async Task test_1_greater_than_or_equal_4_returns_false()
 		{
-			var testClass = new TestClass(1, 4);
+			var testClass = new TestClass(1);
 
 			var validationReport = await this.validator.Validate(testClass);
-
-			validationReport.Violations.First().Error.Key.ShouldEqual("GreaterThanEq");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ToString().ShouldEqual("x.Value2");
+            validationReport.Violations.First().Error.Key.ShouldEqual("GreaterThanEq");
+			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("4");
 		}
 
 		[Test]
 		public async Task test_4_greater_than_or_equal_1_returns_true()
 		{
-			var testClass = new TestClass(4, 1);
+			var testClass = new TestClass(4);
 
 			var validationReport = await this.validator.Validate(testClass);
 
@@ -37,24 +36,22 @@ namespace MuonLab.Validation.Tests.IComparable
 		}
 
 		[Test]
-		public async Task test_2_greater_than_or_equal_2_returns_true()
+		public async Task test_4_greater_than_or_equal_4_returns_true()
 		{
-			var testClass = new TestClass(2, 2);
+			var testClass = new TestClass(4);
 
 			var validationReport = await this.validator.Validate(testClass);
 
-			Assert.IsTrue(validationReport.IsValid);
+            Assert.IsTrue(validationReport.IsValid);
 		}
 
 		private class TestClass
 		{
-			public int Value { get; set; }
-			public int Value2 { get; set; }
+			public int Value { get; }
 
-			public TestClass(int value, int value2)
+			public TestClass(int value)
 			{
 				this.Value = value;
-				this.Value2 = value2;
 			}
 		}
 
@@ -62,7 +59,7 @@ namespace MuonLab.Validation.Tests.IComparable
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.Value.IsGreaterThanOrEqualTo(x.Value2));
+				Ensure(x => x.Value.IsGreaterThanOrEqualTo((int?)4));
 			}
 		}
 	}

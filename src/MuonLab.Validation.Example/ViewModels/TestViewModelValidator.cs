@@ -5,7 +5,8 @@ namespace MuonLab.Validation.Example.ViewModels
 		protected override void Rules()
 		{
 			this.Ensure(x => x.Email.IsNotNullOrEmpty()).And(() =>
-				this.Ensure(x => x.Email.IsAValidEmailAddress()));
+				// You'd want your own rules here
+				this.Ensure(x => x.Email.Matches(@"[a-z]\@[a-z]\.com", "Invalid")));
 
 			this.Ensure(x => x.Password.HasMinimumLength(8));
 

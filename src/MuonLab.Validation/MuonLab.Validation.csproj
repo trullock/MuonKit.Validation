@@ -89,12 +89,10 @@
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\NullableExtensions.cs" />
     <Compile Include="Extensions\SatisfiesExtension.cs" />
-    <Compile Include="Extensions\SemanticStringExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\StrongPasswordStringExtension.cs" />
     <Compile Include="ICollectionCondition.cs" />
     <Compile Include="ICondition.cs" />
-    <Compile Include="EmailValidator.cs" />
     <Compile Include="IErrorMessageResolver.cs" />
     <Compile Include="IValidationRule.cs" />
     <Compile Include="IValidator.cs" />

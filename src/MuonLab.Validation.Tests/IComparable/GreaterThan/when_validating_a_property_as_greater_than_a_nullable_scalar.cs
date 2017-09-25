@@ -2,10 +2,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace MuonLab.Validation.Tests.IComparable
+namespace MuonLab.Validation.Tests.IComparable.GreaterThan
 {
 	[TestFixture]
-	public class When_validating_a_property_as_not_equal_to_a_scalar
+	public class when_validating_a_property_as_greater_than_a_nullable_scalar
 	{
 		TestClassValidator validator;
 
@@ -16,51 +16,50 @@ namespace MuonLab.Validation.Tests.IComparable
 		}
 
 		[Test]
-		public async Task test_1_not_equals_4_returns_true()
+		public async Task test_1_greater_than_4_returns_false()
 		{
 			var testClass = new TestClass(1);
 
 			var validationReport = await this.validator.Validate(testClass);
 
-            Assert.IsTrue(validationReport.IsValid);
+			validationReport.Violations.First().Error.Key.ShouldEqual("GreaterThan");
+			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("4");
 		}
 
 		[Test]
-		public async Task test_8_not_equals_4_returns_true()
+		public async Task test_8_greater_than_4_returns_true()
 		{
 			var testClass = new TestClass(8);
 
 			var validationReport = await this.validator.Validate(testClass);
 
-            Assert.IsTrue(validationReport.IsValid);
+			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public async Task test_4_not_equals_4_returns_false()
+		public async Task test_4_greater_than_4_returns_false()
 		{
 			var testClass = new TestClass(4);
 
 			var validationReport = await this.validator.Validate(testClass);
 
-            validationReport.Violations.First().Error.Key.ShouldEqual("NotEqualTo");
+			validationReport.Violations.First().Error.Key.ShouldEqual("GreaterThan");
 			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("4");
 		}
 
 		private class TestClass
 		{
-			public int value { get; set; }
-
+			public int Value { get; }
 			public TestClass(int value)
 			{
-				this.value = value;
+				this.Value = value;
 			}
 		}
 
-		private class TestClassValidator : Validator<TestClass>
-		{
+		private class TestClassValidator : Validator<TestClass> {
 			protected override void Rules()
 			{
-				Ensure(x => x.value.IsNotEqualTo(4));
+				Ensure(x => x.Value.IsGreaterThan((int?)4));
 			}
 		}
 	}

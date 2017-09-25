@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace MuonLab.Validation.Tests.IComparable
+namespace MuonLab.Validation.Tests.IComparable.Inequality
 {
 	[TestFixture]
 	public class When_validating_a_property_as_not_equal_to_another
@@ -48,12 +48,12 @@ namespace MuonLab.Validation.Tests.IComparable
 
 		private class TestClass
 		{
-			public int value { get; set; }
-			public int Value2 { get; set; }
+			public int? Value { get; }
+			public int Value2 { get; }
 
 			public TestClass(int value, int value2)
 			{
-				this.value = value;
+				this.Value = value;
 				this.Value2 = value2;
 			}
 		}
@@ -62,7 +62,7 @@ namespace MuonLab.Validation.Tests.IComparable
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.value.IsNotEqualTo(x.Value2));
+				Ensure(x => x.Value.IsNotEqualTo(x.Value2));
 			}
 		}
 	}
