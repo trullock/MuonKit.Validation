@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace MuonLab.Validation.Tests.IComparable
+namespace MuonLab.Validation.Tests.IComparable.LessThan
 {
 	[TestFixture]
 	public class When_validating_a_property_as_less_than_a_scalar
@@ -35,7 +35,7 @@ namespace MuonLab.Validation.Tests.IComparable
 			var violations = validationReport.Violations.ToArray();
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("LessThan");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("4");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("4");
 		}
 
 		[Test]
@@ -46,16 +46,16 @@ namespace MuonLab.Validation.Tests.IComparable
 			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("LessThan");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("4");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("4");
 		}
 
 		private class TestClass
 		{
-			public int value { get; set; }
+			public int Value { get; }
 
 			public TestClass(int value)
 			{
-				this.value = value;
+				this.Value = value;
 			}
 		}
 
@@ -63,7 +63,7 @@ namespace MuonLab.Validation.Tests.IComparable
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.value.IsLessThan(4));
+				Ensure(x => x.Value.IsLessThan(4));
 			}
 		}
 	}

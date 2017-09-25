@@ -2,10 +2,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace MuonLab.Validation.Tests.IComparable
+namespace MuonLab.Validation.Tests.IComparable.LessThanEq
 {
 	[TestFixture]
-	public class When_validation_a_property_as_less_than_or_equal_to_a_sclar
+	public class When_validation_a_property_as_less_than_or_equal_to_a_nullable_scalar
 	{
 		private TestClassValidator validator;
 
@@ -33,7 +33,7 @@ namespace MuonLab.Validation.Tests.IComparable
 			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("LessThanEq");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("4");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("4");
 		}
 
 		[Test]
@@ -48,11 +48,11 @@ namespace MuonLab.Validation.Tests.IComparable
 
 		private class TestClass
 		{
-			public int value { get; set; }
+			public int Value { get; }
 
 			public TestClass(int value)
 			{
-				this.value = value;
+				this.Value = value;
 			}
 		}
 
@@ -60,7 +60,7 @@ namespace MuonLab.Validation.Tests.IComparable
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.value.IsLessThanOrEqualTo(4));
+				Ensure(x => x.Value.IsLessThanOrEqualTo((int?)4));
 			}
 		}
 	}

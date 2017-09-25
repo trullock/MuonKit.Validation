@@ -23,7 +23,7 @@ namespace MuonLab.Validation.Tests.IComparable.GreaterThan
 			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("GreaterThan");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ToString().ShouldEqual("x.Value2");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("Value2");
 		}
 
 		[Test]
@@ -44,7 +44,7 @@ namespace MuonLab.Validation.Tests.IComparable.GreaterThan
 			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("GreaterThan");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ToString().ShouldEqual("x.Value2");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("Value2");
 		}
 
 		private class TestClass

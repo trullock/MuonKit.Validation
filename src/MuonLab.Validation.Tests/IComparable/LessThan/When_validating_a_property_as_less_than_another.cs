@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace MuonLab.Validation.Tests.IComparable
+namespace MuonLab.Validation.Tests.IComparable.LessThan
 {
 	[TestFixture]
 	public class When_validating_a_property_as_less_than_another
@@ -35,7 +35,7 @@ namespace MuonLab.Validation.Tests.IComparable
 
 
             validationReport.Violations.First().Error.Key.ShouldEqual("LessThan");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ToString().ShouldEqual("x.Value2");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("Value2");
 		}
 
 		[Test]
@@ -46,17 +46,17 @@ namespace MuonLab.Validation.Tests.IComparable
 			var validationReport = await this.validator.Validate(testClass);
 
             validationReport.Violations.First().Error.Key.ShouldEqual("LessThan");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ToString().ShouldEqual("x.Value2");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("Value2");
 		}
 
 		private class TestClass
 		{
-			public int value { get; set; }
-			public int Value2 { get; set; }
+			public int Value { get; }
+			public int Value2 { get; }
 
 			public TestClass(int value, int value2)
 			{
-				this.value = value;
+				this.Value = value;
 				this.Value2 = value2;
 			}
 		}
@@ -65,7 +65,7 @@ namespace MuonLab.Validation.Tests.IComparable
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.value.IsLessThan(x.Value2));
+				Ensure(x => x.Value.IsLessThan(x.Value2));
 			}
 		}
 	}

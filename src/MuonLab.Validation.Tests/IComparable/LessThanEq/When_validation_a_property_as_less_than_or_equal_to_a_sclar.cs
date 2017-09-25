@@ -2,12 +2,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace MuonLab.Validation.Tests.IComparable.Equality
+namespace MuonLab.Validation.Tests.IComparable.LessThanEq
 {
 	[TestFixture]
-	public class When_validating_a_property_as_equal_to_a_nullable_scalar
+	public class When_validation_a_property_as_less_than_or_equal_to_a_sclar
 	{
-		TestClassValidator validator;
+		private TestClassValidator validator;
 
 		[SetUp]
 		public void SetUp()
@@ -16,28 +16,28 @@ namespace MuonLab.Validation.Tests.IComparable.Equality
 		}
 
 		[Test]
-		public async Task test_1_equals_4_returns_false()
+		public async Task test_1_less_than_or_equal_to_4_returns_true()
 		{
 			var testClass = new TestClass(1);
 
-			var validationReport = await this.validator.Validate(testClass);
+			var validationReport = await this.validator.Validate(testClass); 
 
-			validationReport.Violations.First().Error.Key.ShouldEqual("EqualTo");
-			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("4");
+			Assert.IsTrue(validationReport.IsValid);
 		}
 
 		[Test]
-		public async Task test_8_equals_4_returns_false()
+		public async Task test_8_less_than_or_equal_to_4_returns_false()
 		{
 			var testClass = new TestClass(8);
 
 			var validationReport = await this.validator.Validate(testClass);
 
-			Assert.IsFalse(validationReport.IsValid);
+			validationReport.Violations.First().Error.Key.ShouldEqual("LessThanEq");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("4");
 		}
 
 		[Test]
-		public async Task test_4_equals_4_returns_true()
+		public async Task test_4_less_than_or_equal_to_4_returns_true()
 		{
 			var testClass = new TestClass(4);
 
@@ -48,11 +48,11 @@ namespace MuonLab.Validation.Tests.IComparable.Equality
 
 		private class TestClass
 		{
-			public int Value { get; }
+			public int value { get; set; }
 
 			public TestClass(int value)
 			{
-				this.Value = value;
+				this.value = value;
 			}
 		}
 
@@ -60,7 +60,7 @@ namespace MuonLab.Validation.Tests.IComparable.Equality
 		{
 			protected override void Rules()
 			{
-				Ensure(x => x.Value.IsEqualTo((int?)4));
+				Ensure(x => x.value.IsLessThanOrEqualTo(4));
 			}
 		}
 	}

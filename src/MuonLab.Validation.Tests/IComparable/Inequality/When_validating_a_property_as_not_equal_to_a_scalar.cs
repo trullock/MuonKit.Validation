@@ -43,7 +43,7 @@ namespace MuonLab.Validation.Tests.IComparable.Inequality
 			var validationReport = await this.validator.Validate(testClass);
 
             validationReport.Violations.First().Error.Key.ShouldEqual("NotEqualTo");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("4");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("4");
 		}
 
 		private class TestClass

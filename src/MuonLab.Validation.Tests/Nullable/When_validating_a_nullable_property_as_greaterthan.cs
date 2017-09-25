@@ -24,7 +24,7 @@ namespace MuonLab.Validation.Tests.Nullable
 			var violations = validationReport.Violations.ToArray();
 
 			violations[0].Error.Key.ShouldEqual("GreaterThanEq");
-			violations[0].Error.Replacements["arg0"].Value.ShouldEqual("1");
+			violations[0].Error.Replacements["arg0"].ToString().ShouldEqual("1");
 		}
 
 		[Test]

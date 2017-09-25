@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace MuonLab.Validation.Tests.IComparable
+namespace MuonLab.Validation.Tests.IComparable.Equality
 {
 	[TestFixture]
 	public class When_validating_a_null_property_as_equal_to_another_null_property

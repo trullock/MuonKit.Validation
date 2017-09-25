@@ -67,6 +67,7 @@
     <Compile Include="Boolean\When_validating_a_property_as_false.cs" />
     <Compile Include="Boolean\When_validating_a_property_as_true.cs" />
     <Compile Include="Enumerables\When_validating_no_duplicates.cs" />
+    <Compile Include="IComparable\Between\when_validating_a_property_as_between_two_other_properties.cs" />
     <Compile Include="IComparable\Equality\When_validating_a_property_as_equal_to_a_nullable_scalar.cs" />
     <Compile Include="IComparable\Equality\When_validating_a_nullable_property_as_equal_to_a_scalar.cs" />
     <Compile Include="IComparable\GreaterThanEq\When_validating_a_property_has_greater_than_or_equal_to_a_nullable_scalar.cs" />
@@ -75,6 +76,10 @@
     <Compile Include="IComparable\GreaterThan\when_validating_a_nullable_property_as_greater_than_a_scalar.cs" />
     <Compile Include="IComparable\Inequality\When_validating_a_property_as_not_equal_to_a_nullable_scalar.cs" />
     <Compile Include="IComparable\Inequality\When_validating_a_nullable_property_as_not_equal_to_a_scalar.cs" />
+    <Compile Include="IComparable\LessThanEq\When_validation_a_nullable_property_as_less_than_or_equal_to_a_sclar.cs" />
+    <Compile Include="IComparable\LessThanEq\When_validation_a_property_as_less_than_or_equal_to_a_nullable_scalar.cs" />
+    <Compile Include="IComparable\LessThan\When_validating_a_property_as_less_than_a_nullable_scalar.cs" />
+    <Compile Include="IComparable\LessThan\When_validating_a_nullable_property_as_less_than_a_scalar.cs" />
     <Compile Include="Nullable\When_validating_a_nullable_property.cs" />
     <Compile Include="Nullable\When_validating_a_nullable_property_as_greaterthan.cs" />
     <Compile Include="Exceptions\When_failing_to_validate_a_parameter.cs" />
@@ -85,7 +90,7 @@
     <Compile Include="when_validating_with_an_ANY_rule.cs" />
     <Compile Include="Enumerables\When_validating_complex_types.cs" />
     <Compile Include="ErrorMessagesShouldWork.cs" />
-    <Compile Include="IComparable\When_validating_a_null_property_as_equal_to_another_null_property.cs" />
+    <Compile Include="IComparable\Equality\When_validating_a_null_property_as_equal_to_another_null_property.cs" />
     <Compile Include="NullProperties\when_validating_a_null_property.cs" />
     <Compile Include="ShouldExtensions.cs" />
     <Compile Include="String\When_validating_a_property_as_equal_to.cs" />
@@ -97,12 +102,12 @@
     <Compile Include="IComparable\Equality\When_validating_a_property_as_equal_to_a_scalar.cs" />
     <Compile Include="IComparable\GreaterThan\when_validating_a_property_as_greater_than_another.cs" />
     <Compile Include="IComparable\GreaterThan\when_validating_a_property_as_greater_than_a_scalar.cs" />
-    <Compile Include="IComparable\When_validating_a_property_as_less_than_another.cs" />
-    <Compile Include="IComparable\When_validating_a_property_as_less_than_a_scalar.cs" />
+    <Compile Include="IComparable\LessThan\When_validating_a_property_as_less_than_another.cs" />
+    <Compile Include="IComparable\LessThan\When_validating_a_property_as_less_than_a_scalar.cs" />
     <Compile Include="IComparable\GreaterThanEq\When_validating_a_property_has_greater_than_or_equal_to_another.cs" />
     <Compile Include="IComparable\GreaterThanEq\When_validating_a_property_has_greater_than_or_equal_to_a_scalar.cs" />
-    <Compile Include="IComparable\When_validation_a_property_as_less_than_or_equal_to_another.cs" />
-    <Compile Include="IComparable\When_validation_a_property_as_less_than_or_equal_to_a_sclar.cs" />
+    <Compile Include="IComparable\LessThanEq\When_validation_a_property_as_less_than_or_equal_to_another.cs" />
+    <Compile Include="IComparable\LessThanEq\When_validation_a_property_as_less_than_or_equal_to_a_sclar.cs" />
     <Compile Include="Enumerables\When_validating_a_nullable_property.cs" />
     <Compile Include="Exceptions\When_failing_to_validate_a_property.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -159,4 +164,5 @@
       <Paket>True</Paket>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
 </Project>

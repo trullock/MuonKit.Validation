@@ -22,7 +22,7 @@ namespace MuonLab.Validation.Tests.IComparable.GreaterThanEq
 
 			var validationReport = await this.validator.Validate(testClass);
             validationReport.Violations.First().Error.Key.ShouldEqual("GreaterThanEq");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("4");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("4");
 		}
 
 		[Test]

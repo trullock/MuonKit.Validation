@@ -23,7 +23,7 @@ namespace MuonLab.Validation.Tests.String
 			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("MinLength");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("5");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("5");
 		}
 
 		[Test]
@@ -34,7 +34,7 @@ namespace MuonLab.Validation.Tests.String
 			var validationReport = await this.validator.Validate(testClass);
 
 			validationReport.Violations.First().Error.Key.ShouldEqual("MinLength");
-			validationReport.Violations.First().Error.Replacements["arg0"].Value.ShouldEqual("5");
+			validationReport.Violations.First().Error.Replacements["arg0"].ToString().ShouldEqual("5");
 		}
 
 		[Test]
