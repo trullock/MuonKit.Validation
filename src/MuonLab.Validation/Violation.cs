@@ -4,9 +4,9 @@ namespace MuonLab.Validation
 {
 	public sealed class Violation : IViolation
 	{
-		public Expression Property { get; set; }
-		public ErrorDescriptor Error { get; set; }
-		public object AttemptedValue { get; set; }
+		public Expression Property { get; }
+		public ErrorDescriptor Error { get; }
+		public object AttemptedValue { get; }
 
 		public Violation(ErrorDescriptor error, Expression property, object attemptedValue)
 		{

@@ -104,7 +104,7 @@
     <Compile Include="PropertyCondition.cs" />
     <Compile Include="PropertyValidationRule.cs" />
     <Compile Include="ReflectionHelper.cs" />
-    <Compile Include="ResourceErrorMessageResolver.cs" />
+    <Compile Include="ResourceManagerErrorMessageResolver.cs" />
     <Compile Include="ValidationException.cs" />
     <Compile Include="ValidationReport.cs" />
     <Compile Include="Validator.cs" />

@@ -13,7 +13,7 @@ namespace MuonLab.Validation
 		internal Expression AutoInline(InvocationExpression expression)
 		{
 			this.isLocked = true;
-			if (expression == null) throw new ArgumentNullException("expression");
+			if (expression == null) throw new ArgumentNullException(nameof(expression));
 			LambdaExpression lambda = (LambdaExpression) expression.Expression;
 			ExpressionRewriter childScope = new ExpressionRewriter(this);
 			var lambdaParams = lambda.Parameters;
@@ -33,7 +33,7 @@ namespace MuonLab.Validation
 
 		ExpressionRewriter(ExpressionRewriter parent)
 		{
-			if (parent == null) throw new ArgumentNullException("parent");
+			if (parent == null) throw new ArgumentNullException(nameof(parent));
 			this.subst = new Dictionary<Expression, Expression>(parent.subst);
 			this.inline = parent.inline;
 		}
@@ -48,8 +48,7 @@ namespace MuonLab.Validation
 					"You cannot alter the rewriter after Apply has been called");
 		}
 
-		public ExpressionRewriter Subst(Expression from,
-		                                Expression to)
+		public ExpressionRewriter Subst(Expression from, Expression to)
 		{
 			CheckLocked();
 			this.subst.Add(from, to);
@@ -87,8 +86,7 @@ namespace MuonLab.Validation
 
 		Expression[] Walk(IEnumerable<Expression> expressions)
 		{
-			if (expressions == null) return null;
-			return expressions.Select(expr => Walk(expr)).ToArray();
+			return expressions?.Select(Walk).ToArray();
 		}
 
 		static bool HasValue(Expression[] expressions)

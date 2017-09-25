@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -9,9 +8,6 @@ namespace MuonLab.Validation
 	{
 		Task<ValidationReport> Validate(TEntity entity);
 		Task<ValidationReport> Validate<TOuter>(TEntity entity, Expression<Func<TOuter, TEntity>> prefix);
-
-		IEnumerable<IValidationRule<TEntity>> GetRulesFor<TProperty>(Expression<Func<TEntity, TProperty>> property);
-		IEnumerable<IValidationRule<TEntity>> ValidationRules { get; }
 	}
 
 	public interface IValidator

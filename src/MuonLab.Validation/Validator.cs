@@ -49,32 +49,7 @@ namespace MuonLab.Validation
 		{
 			return Validate((T)entity);
 		}
-
-		/// <summary>
-		/// WARNING This will currently fail for child and parameter-only rules
-		/// </summary>
-		/// <typeparam name="TProperty"></typeparam>
-		/// <param name="property"></param>
-		/// <returns></returns>
-		public IEnumerable<IValidationRule<T>> GetRulesFor<TProperty>(Expression<Func<T, TProperty>> property)
-		{
-			var foundRules = new List<IValidationRule<T>>();
-
-			foreach (IValidationRule<T> rule in this.ValidationRules)
-			{
-				// TODO: handle children
-				var castRule = rule as PropertyValidationRule<T, TProperty>;
-
-				if(castRule != null)
-				{
-					if (ReflectionHelper.MemberAccessExpressionsAreEqual(castRule.PropertyExpression, property))
-						foundRules.Add(rule);
-				}
-			}
-
-			return foundRules;
-		}
-
+		
 		protected ConditionalChain<TValue> Ensure<TValue>(Expression<Func<T, ICondition<TValue>>> propertyCondition)
 		{
 			var methodCallExpression = propertyCondition.Body as MethodCallExpression;

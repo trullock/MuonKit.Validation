@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MuonLab.Validation
 {
-	class CollectionValidationRule<T, TValue> : BaseValidationRule<T, IList<TValue>>
+	sealed class CollectionValidationRule<T, TValue> : BaseValidationRule<T, IList<TValue>>
 	{
 		public CollectionValidationRule(Expression<Func<T, ICondition<IList<TValue>>>> validationExpression)
 			: base(validationExpression)

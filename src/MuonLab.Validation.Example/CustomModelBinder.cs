@@ -27,7 +27,7 @@ namespace MuonLab.Validation.Example
 			if (!validationReport.IsValid)
 			{
 				var violationPropertyNameResolver = new MvcViolationPropertyNameResolver();
-				var errorMessageResolver = new ResourceErrorMessageResolver();
+				var errorMessageResolver = new ResourceManagerErrorMessageResolver("MuonLab.Validation.ErrorMessages");
 
 				foreach (var violation in validationReport.Violations)
 				{

@@ -7,8 +7,7 @@ namespace MuonLab.Validation
 {
 	sealed class PropertyValidationRule<T, TValue> : BaseValidationRule<T, TValue>
 	{
-		public PropertyValidationRule(Expression<Func<T, ICondition<TValue>>> validationExpression)
-			: base(validationExpression)
+		public PropertyValidationRule(Expression<Func<T, ICondition<TValue>>> validationExpression) : base(validationExpression)
 		{
 			this.property = this.Condition.Arguments[0] as MemberExpression;
 			this.PropertyExpression = Expression.Lambda<Func<T, TValue>>(this.property, this.FindParameter(this.property));
@@ -55,7 +54,7 @@ namespace MuonLab.Validation
 			return new[] {this.CreateViolation(condition.ErrorKey, value, entity, propExpr)};
 		}
 
-		IViolation CreateViolation(string errorKey, TValue value, T entity, Expression property)
+		IViolation CreateViolation(string errorKey, TValue value, T entity, Expression prop)
 		{
 			var replacements = new Dictionary<string, ErrorDescriptor.Replacement>
 			{
@@ -65,7 +64,7 @@ namespace MuonLab.Validation
 			for (var i = 1; i < this.Condition.Arguments.Count; i++)
 				replacements.Add("arg" + (i - 1), this.EvaluateExpression(this.Condition.Arguments[i], entity));
 
-			return new Violation(new ErrorDescriptor(errorKey, replacements), property, value);
+			return new Violation(new ErrorDescriptor(errorKey, replacements), prop, value);
 		}
 
 		ErrorDescriptor.Replacement EvaluateExpression(Expression expression, T entity)
@@ -79,8 +78,7 @@ namespace MuonLab.Validation
 			var lambda = Expression.Lambda(expression, this.validationExpression.Parameters[0]);
 			var value = lambda.Compile().DynamicInvoke(entity);
 
-			return new ErrorDescriptor.Replacement(ErrorDescriptor.Replacement.ReplacementType.Scalar,
-				value != null ? value.ToString() : "NULL");
+			return new ErrorDescriptor.Replacement(ErrorDescriptor.Replacement.ReplacementType.Scalar, value?.ToString() ?? "NULL");
 		}
 	}
 }

@@ -6,7 +6,8 @@ namespace MuonLab.Validation
 	[Serializable]
 	public sealed class ValidationException : Exception
 	{
-		public ValidationReport Report { get; private set; }
+		public ValidationReport Report { get; }
+
 		public ValidationException(ValidationReport report)
 		{
 			this.Report = report;

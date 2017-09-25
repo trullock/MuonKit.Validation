@@ -5,24 +5,18 @@ namespace MuonLab.Validation
 {
 	public sealed class ValidationReport
 	{
-		public IEnumerable<IViolation> Violations { get; protected set; }
+		public IEnumerable<IViolation> Violations { get; }
 
-		public ValidationReport(IEnumerable<IViolation> violations)
-		{
-			this.Violations = violations;
-		}
+		public bool IsValid => !this.Violations.Any();
 
 		public ValidationReport()
 		{
 			this.Violations = new List<IViolation>();
 		}
 
-		public bool IsValid
+		public ValidationReport(IEnumerable<IViolation> violations)
 		{
-			get
-			{
-				return !this.Violations.Any();
-			}
+			this.Violations = violations;
 		}
 	}
 }

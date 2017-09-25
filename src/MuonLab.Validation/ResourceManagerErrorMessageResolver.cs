@@ -3,14 +3,14 @@ using System.Resources;
 
 namespace MuonLab.Validation
 {
-	public sealed class ResourceErrorMessageResolver : IErrorMessageResolver
+	public sealed class ResourceManagerErrorMessageResolver : IErrorMessageResolver
 	{
 		readonly ResourceManager resourceManager;
 		readonly CultureInfo defaultCulture;
 
-		public ResourceErrorMessageResolver()
+		public ResourceManagerErrorMessageResolver(string assembly)
 		{
-			this.resourceManager = new ResourceManager("MuonLab.Validation.ErrorMessages", this.GetType().Assembly);
+			this.resourceManager = new ResourceManager(assembly, this.GetType().Assembly);
 			this.defaultCulture = CultureInfo.CreateSpecificCulture("en");
 		}
 
