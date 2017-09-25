@@ -79,9 +79,13 @@
     <Compile Include="ExpressionRewriter.cs" />
     <Compile Include="Extensions\BooleanExtensions.cs" />
     <Compile Include="Extensions\ClassExtensions.cs" />
+    <Compile Include="Extensions\GreaterThanOrEqualExtensions.cs" />
+    <Compile Include="Extensions\GreaterThanExtensions.cs" />
+    <Compile Include="Extensions\BetweenExtensions.cs" />
+    <Compile Include="Extensions\LessThanExtensions.cs" />
     <Compile Include="Extensions\InequalityExtensions.cs" />
     <Compile Include="Extensions\EqualityExtensions.cs" />
-    <Compile Include="Extensions\IComparableExtensions.cs" />
+    <Compile Include="Extensions\LessThanOrEqualExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\NullableExtensions.cs" />
     <Compile Include="Extensions\SatisfiesExtension.cs" />
